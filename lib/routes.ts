@@ -1,6 +1,9 @@
 import { Request, Response, Application } from "express";
+import { ProductController } from "controllers/product.controller";
 
 export class Routes {
+
+  public productController = new ProductController();
 
   public routes(app: Application): void {
     this.mainRoute(app);
@@ -23,32 +26,12 @@ export class Routes {
 
   public tableRoute(app: Application): void {
     app.route("/products")
-      .get((req: Request, res: Response) => {
-        res.status(200).send({
-          message: "Fine, You are talking to products."
-        });
-      })
-      .post((req: Request, res: Response) => {
-        res.status(200).send({
-          message: "Great! You posted some data to products. We will handle it."
-        })
-      });
+      .get(this.productController.all)
+      .post(this.productController.add);
     app.route("/products/:id")
-      .get((req: Request, res: Response) => {
-        res.status(200).send({
-          message: "Oh, looks like you are trying to access some strict data from products. products is preparing it."
-        })
-      })
-      .put((req: Request, res: Response) => {
-        res.status(200).send({
-          message: "So you are trying to modify something on products, huh? Soon it will be possible."
-        })
-      })
-      .delete((req: Request, res: Response) => {
-        res.status(200).send({
-          message: "Such a mess you are doing here, trying to delete some products. Not now, but in a moment, ok?"
-        })
-      });
+      .get(this.productController.get)
+      .put(this.productController.update)
+      .delete(this.productController.remove);
 
   }
 

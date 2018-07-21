@@ -1,18 +1,19 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
+import * as mongoose from "mongoose";
 import { Routes } from "routes";
 
 class App {
-  // app
+  
   public app: express.Application;
-
-  // routes
   public routes: Routes = new Routes();
+  public mongoUrl: string = 'mongodb://localhost/restaurant-app-db';
 
   constructor() {
     this.app = express();
     this.config();
     this.registerRoutes();
+    this.mongoSetup();
   }
 
   private config() {
@@ -23,6 +24,13 @@ class App {
   private registerRoutes() {
     this.routes.routes(this.app);
   }
+
+  private mongoSetup() {
+    mongoose.connect(this.mongoUrl, (err) => {
+      console.log(err);
+    }); 
+  }
+  
 }
 
 export default new App().app;
