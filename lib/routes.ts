@@ -3,18 +3,8 @@ import { Request, Response, Application } from "express";
 export class Routes {
 
   public routes(app: Application): void {
-    this.notFoundRoute(app, "Dude, you're probably lost. Go find yourself in google.com");
     this.mainRoute(app);
     this.tableRoute(app);
-  }
-
-  public notFoundRoute(app: Application, notFoundMessage: string) {
-    let notFoundRouteFunction = (req: Request, res: Response) => {
-      res.status(404).send({
-        message: notFoundMessage
-      });
-    };
-    app.route("*").all(notFoundRouteFunction);
   }
 
   public mainRoute(app: Application): void {
