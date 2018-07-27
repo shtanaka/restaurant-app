@@ -27,7 +27,7 @@ class App {
 
   private mongoSetup() {
     mongoose.connect(this.mongoUrl, (err) => {
-      console.log(err);
+      console.log(err, 'error');
     }); 
   }
   

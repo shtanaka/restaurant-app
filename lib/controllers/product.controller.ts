@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 import { Request, Response } from 'express';
 import { ProductSchema } from 'models/product.model';
 
-const Product = mongoose.model('Product', ProductSchema)
+const Product = mongoose.model('Product', ProductSchema);
 
 export class ProductController {
 
@@ -35,12 +35,13 @@ export class ProductController {
   }
 
   public update(req: Request, res: Response) {
-    Product.findByIdAndUpdate(req.params.id, (err, product) => {
-      if (err) {
-        res.send(err);
-      }
-      res.json(product);
-    });
+    Product.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true },
+      (err, product) => {
+        if (err) {
+          res.send(err);
+        }
+        res.json(product);
+      });
   }
 
   public remove(req: Request, res: Response) {
